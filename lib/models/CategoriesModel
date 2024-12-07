@@ -1,0 +1,103 @@
+
+
+import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
+
+// part 'category.g.dart';
+
+@JsonSerializable()
+List<Categories> categoriesFromJson(String str) => List<Categories>.from(json.decode(str).map((x) => Categories.fromJson(x)));
+
+String categoriesToJson(List<Categories> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class Categories {
+    String id;
+    String menuCategoryId;
+    String menuId;
+    String storeId;
+    Title? title;
+    Title? subTitle;
+    List<MenuEntity> menuEntities;
+    DateTime? createdDate;
+    DateTime? modifiedDate;
+    String createdBy;
+    String modifiedBy;
+
+  Categories({
+    required this.id,
+        required this.menuCategoryId,
+        required this.menuId,
+        required this.storeId,
+        this.title,
+        this.subTitle,
+        required this.menuEntities,
+        this.createdDate,
+        this.modifiedDate,
+        required this.createdBy,
+        required this.modifiedBy,
+  });
+
+    factory Categories.fromJson(Map<String, dynamic> json) => Categories(
+        id: json["ID"],
+        menuCategoryId: json["MenuCategoryID"],
+        menuId: json["MenuID"],
+        storeId: json["StoreID"],
+        title: json["Title"] != null ? Title.fromJson(json["Title"]) : null,
+        subTitle: json["SubTitle"] != null ? Title.fromJson(json["SubTitle"]) : null,
+        menuEntities: List<MenuEntity>.from(json["MenuEntities"].map((x) => MenuEntity.fromJson(x))),
+        createdDate: json["CreatedDate"] != null ? DateTime.parse(json["CreatedDate"]) : null,
+        modifiedDate: json["ModifiedDate"] != null ? DateTime.parse(json["ModifiedDate"]) : null,
+        createdBy: json["CreatedBy"],
+        modifiedBy: json["ModifiedBy"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "ID": id,
+        "MenuCategoryID": menuCategoryId,
+        "MenuID": menuId,
+        "StoreID": storeId,
+        "Title": title?.toJson(),
+        "SubTitle": subTitle?.toJson(),
+        "MenuEntities": List<dynamic>.from(menuEntities.map((x) => x.toJson())),
+        "CreatedDate": createdDate?.toIso8601String(),
+        "ModifiedDate": modifiedDate?.toIso8601String(),
+        "CreatedBy": createdBy,
+        "ModifiedBy": modifiedBy,
+    };
+}
+
+class MenuEntity {
+    String id;
+    String type;
+
+    MenuEntity({
+        required this.id,
+        required this.type,
+    });
+
+    factory MenuEntity.fromJson(Map<String, dynamic> json) => MenuEntity(
+        id: json["ID"],
+        type: json["Type"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "ID": id,
+        "Type": type,
+    };
+}
+
+class Title {
+    String en;
+
+    Title({
+        required this.en,
+    });
+
+    factory Title.fromJson(Map<String, dynamic> json) => Title(
+        en: json["en"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "en": en,
+    };
+}

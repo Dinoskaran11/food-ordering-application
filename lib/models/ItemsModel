@@ -1,0 +1,916 @@
+
+
+import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
+
+// part 'item.g.dart';
+
+@JsonSerializable()
+List<Items> itemsFromJson(String str) => List<Items>.from(json.decode(str).map((x) => Items.fromJson(x)));
+
+String itemsToJson(List<Items> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class Items {
+  String id;
+  String menuItemId;
+  String storeId;
+  Description title;
+  Description description;
+  String? imageUrl;
+  PriceInfo priceInfo;
+  String? externalData;
+  QuantityInfo quantityInfo;
+  SuspensionRules suspensionRules;
+  ModifierGroupRules modifierGroupRules;
+  RewardGroupRules rewardGroupRules;
+  TaxInfo taxInfo;
+  int aggregatedProductRating;
+  int totalReviews;
+  DateTime? createdDate;
+  DateTime? modifiedDate;
+  NutrientData nutrientData;
+  DishInfo dishInfo;
+  VisibilityInfo visibilityInfo;
+  ProductInfo productInfo;
+  dynamic bundleItems;
+  BeverageInfo beverageInfo;
+  List<String> categoryIDs;
+  List<dynamic> allergens;
+  MetaData metaData;
+
+  Items({
+    required this.id,
+    required this.menuItemId,
+    required this.storeId,
+    required this.title,
+    required this.description,
+    this.imageUrl,
+    required this.priceInfo,
+    required this.externalData,
+    required this.quantityInfo,
+    required this.suspensionRules,
+    required this.modifierGroupRules,
+    required this.rewardGroupRules,
+    required this.taxInfo,
+    required this.aggregatedProductRating,
+    required this.totalReviews,
+    required this.createdDate,
+    required this.modifiedDate,
+    required this.nutrientData,
+    required this.dishInfo,
+    required this.visibilityInfo,
+    required this.productInfo,
+    this.bundleItems,
+    required this.beverageInfo,
+    required this.categoryIDs,
+    required this.allergens,
+    required this.metaData,
+  });
+
+  factory Items.fromJson(Map<String, dynamic> json) => Items(
+    id: json["ID"] ?? "",
+    menuItemId: json["MenuItemID"] ?? "",
+    storeId: json["StoreID"] ?? "",
+    title: Description.fromJson(json["Title"] ?? {}),
+    description: Description.fromJson(json["Description"] ?? {}),
+    imageUrl: json["ImageURL"] ?? "",
+    priceInfo: PriceInfo.fromJson(json["PriceInfo"] ?? {}),
+    externalData: json["ExternalData"],
+    quantityInfo: QuantityInfo.fromJson(json["QuantityInfo"] ?? {}),
+    suspensionRules: SuspensionRules.fromJson(json["SuspensionRules"] ?? {}),
+    modifierGroupRules: ModifierGroupRules.fromJson(json["ModifierGroupRules"] ?? {}),
+    rewardGroupRules: RewardGroupRules.fromJson(json["RewardGroupRules"] ?? {}),
+    taxInfo: TaxInfo.fromJson(json["TaxInfo"] ?? {}),
+    aggregatedProductRating: json["AggregatedProductRating"] ?? 0,
+    totalReviews: json["TotalReviews"] ?? 0,
+    createdDate: json["CreatedDate"] != null ? DateTime.parse(json["CreatedDate"]) : null,
+    modifiedDate: json["ModifiedDate"] != null ? DateTime.parse(json["ModifiedDate"]) : null,
+    nutrientData: NutrientData.fromJson(json["NutrientData"] ?? {}),
+    dishInfo: DishInfo.fromJson(json["DishInfo"] ?? {}),
+    visibilityInfo: VisibilityInfo.fromJson(json["VisibilityInfo"] ?? {}),
+    productInfo: ProductInfo.fromJson(json["ProductInfo"] ?? {}),
+    bundleItems: json["BundleItems"],
+    beverageInfo: BeverageInfo.fromJson(json["BeverageInfo"] ?? {}),
+    categoryIDs: List<String>.from(json["CategoryIDs"]?.map((x) => x) ?? []),
+    allergens: List<dynamic>.from(json["Allergens"]?.map((x) => x) ?? []),
+    metaData: MetaData.fromJson(json["MetaData"] ?? {}),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "ID": id,
+    "MenuItemID": menuItemId,
+    "StoreID": storeId,
+    "Title": title.toJson(),
+    "Description": description.toJson(),
+    "ImageURL": imageUrl,
+    "PriceInfo": priceInfo.toJson(),
+    "ExternalData": externalData,
+    "QuantityInfo": quantityInfo.toJson(),
+    "SuspensionRules": suspensionRules.toJson(),
+    "ModifierGroupRules": modifierGroupRules.toJson(),
+    "RewardGroupRules": rewardGroupRules.toJson(),
+    "TaxInfo": taxInfo.toJson(),
+    "AggregatedProductRating": aggregatedProductRating,
+    "TotalReviews": totalReviews,
+    "CreatedDate": createdDate?.toIso8601String(),
+    "ModifiedDate": modifiedDate?.toIso8601String(),
+    "NutrientData": nutrientData.toJson(),
+    "DishInfo": dishInfo.toJson(),
+    "VisibilityInfo": visibilityInfo.toJson(),
+    "ProductInfo": productInfo.toJson(),
+    "BundleItems": bundleItems,
+    "BeverageInfo": beverageInfo.toJson(),
+    "CategoryIDs": List<dynamic>.from(categoryIDs.map((x) => x)),
+    "Allergens": List<dynamic>.from(allergens.map((x) => x)),
+    "MetaData": metaData.toJson(),
+  };
+}
+
+
+class BeverageInfo {
+    int? caffeineAmount;
+    int? alcoholbyVolume;
+    CoffeeInfo? coffeeInfo;
+
+    BeverageInfo({
+         this.caffeineAmount,
+         this.alcoholbyVolume,
+         this.coffeeInfo,
+    });
+
+    factory BeverageInfo.fromJson(Map<String, dynamic> json) => BeverageInfo(
+        caffeineAmount: json["CaffeineAmount"] ?? 0,
+        alcoholbyVolume: json["AlcoholbyVolume"] ?? 0,
+        coffeeInfo: json["CoffeeInfo"] != null
+            ? CoffeeInfo.fromJson(json["CoffeeInfo"])
+            : null,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "CaffeineAmount": caffeineAmount,
+        "AlcoholbyVolume": alcoholbyVolume,
+        "CoffeeInfo": coffeeInfo?.toJson(),
+    };
+}
+
+class CoffeeInfo {
+    dynamic coffeeBeanOrigin;
+
+    CoffeeInfo({
+         this.coffeeBeanOrigin,
+    });
+
+    factory CoffeeInfo.fromJson(Map<String, dynamic> json) => CoffeeInfo(
+        coffeeBeanOrigin: json["CoffeeBeanOrigin"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "CoffeeBeanOrigin": coffeeBeanOrigin,
+    };
+}
+
+class Description {
+    String en;
+
+    Description({
+        required this.en,
+    });
+
+    factory Description.fromJson(Map<String, dynamic> json) => Description(
+        en: json["en"] ?? "",
+    );
+
+    Map<String, dynamic> toJson() => {
+        "en": en,
+    };
+}
+
+class DishInfo {
+    Classifications? classifications;
+
+    DishInfo({
+         this.classifications,
+    });
+
+    factory DishInfo.fromJson(Map<String, dynamic> json) => DishInfo(
+        classifications: json["Classifications"] != null
+            ? Classifications.fromJson(json["Classifications"])
+            : null,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Classifications": classifications?.toJson(),
+    };
+}
+
+class Classifications {
+    bool? canServeAlone;
+    bool? isVegetarian;
+    int? alcoholicItem;
+    List<dynamic> dietaryLabelInfo;
+    String instructionsForUse;
+    List<dynamic> ingredients;
+    List<dynamic> additives;
+    String preparationType;
+    FoolBusinessOperator foolBusinessOperator;
+    bool isHighFatSaltSugar;
+    bool isHalal;
+    int spiceLevel;
+
+    Classifications({
+         this.canServeAlone,
+         this.isVegetarian,
+         this.alcoholicItem,
+        required this.dietaryLabelInfo,
+        required this.instructionsForUse,
+        required this.ingredients,
+        required this.additives,
+        required this.preparationType,
+        required this.foolBusinessOperator,
+        required this.isHighFatSaltSugar,
+        required this.isHalal,
+        required this.spiceLevel,
+    });
+
+    factory Classifications.fromJson(Map<String, dynamic> json) => Classifications(
+        canServeAlone: json["CanServeAlone"] ?? false,
+        isVegetarian: json["IsVegetarian"] ?? false,
+        alcoholicItem: json["AlcoholicItem"] ?? 0,
+        dietaryLabelInfo: json["DietaryLabelInfo"] != null
+          ? List<dynamic>.from(json["DietaryLabelInfo"]?.map((x) => x))
+          : [],
+        instructionsForUse: json["InstructionsForUse"],
+        ingredients: json["Ingredients"] != null
+         ? List<dynamic>.from(json["Ingredients"]?.map((x) => x))
+         : [],
+        additives: json["Additives"] !=null
+         ? List<dynamic>.from(json["Additives"]?.map((x) => x))
+         : [],
+        preparationType: json["PreparationType"] ?? "",
+        foolBusinessOperator: FoolBusinessOperator.fromJson(json["FoolBusinessOperator"] ?? {}),
+        isHighFatSaltSugar: json["IsHighFatSaltSugar"] ?? false,
+        isHalal: json["IsHalal"] ?? false,
+        spiceLevel: json["SpiceLevel"] ?? 0,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "CanServeAlone": canServeAlone,
+        "IsVegetarian": isVegetarian,
+        "AlcoholicItem": alcoholicItem,
+        "DietaryLabelInfo": List<dynamic>.from(dietaryLabelInfo.map((x) => x)),
+        "InstructionsForUse": instructionsForUse,
+        "Ingredients": List<dynamic>.from(ingredients.map((x) => x)),
+        "Additives": List<dynamic>.from(additives.map((x) => x)),
+        "PreparationType": preparationType,
+        "FoolBusinessOperator": foolBusinessOperator.toJson(),
+        "IsHighFatSaltSugar": isHighFatSaltSugar,
+        "IsHalal": isHalal,
+        "SpiceLevel": spiceLevel,
+    };
+}
+
+class FoolBusinessOperator {
+    String? name;
+    String? address;
+
+    FoolBusinessOperator({
+         this.name,
+         this.address,
+    });
+
+    factory FoolBusinessOperator.fromJson(Map<String, dynamic> json) => FoolBusinessOperator(
+        name: json["Name"] ??"",
+        address: json["Address"] ?? "",
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Name": name,
+        "Address": address,
+    };
+}
+
+class MetaData {
+    String? productId;
+    String? productName;
+    String? unitChartId;
+    String? unitChartName;
+
+    MetaData({
+         this.productId,
+         this.productName,
+         this.unitChartId,
+         this.unitChartName,
+    });
+
+    factory MetaData.fromJson(Map<String, dynamic> json) => MetaData(
+        productId: json["ProductID"] ?? "",
+        productName: json["ProductName"] ?? "",
+        unitChartId: json["UnitChartID"] ?? "",
+        unitChartName: json["UnitChartName"] ?? "",
+    );
+
+    Map<String, dynamic> toJson() => {
+        "ProductID": productId,
+        "ProductName": productName,
+        "UnitChartID": unitChartId,
+        "UnitChartName": unitChartName,
+    };
+}
+
+class ModifierGroupRules {
+    List<String> iDs;
+    List<dynamic> overrides;
+
+    ModifierGroupRules({
+        required this.iDs,
+        required this.overrides,
+    });
+
+    factory ModifierGroupRules.fromJson(Map<String, dynamic> json) => ModifierGroupRules(
+        iDs: json["IDs"] != null
+            ? List<String>.from(json["IDs"].map((x) => x))
+            : [],
+        overrides: json["Overrides"] != null
+            ? List<dynamic>.from(json["Overrides"].map((x) => x))
+            : [],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "IDs": iDs != null ? List<dynamic>.from(iDs!.map((x) => x)) : [],
+        "Overrides":
+            overrides != null ? List<dynamic>.from(overrides!.map((x) => x)) : [],
+    };
+}
+
+class NutrientData {
+    Calories? calories;
+    Calories? kilojules;
+    NetQuantity? servingSize;
+    int? numberofServings;
+    NumberofServingIntervals? numberofServingIntervals;
+    NetQuantity? netQuantity;
+    Calories? caloriesperServing;
+    Calories? kilojulesperServing;
+    Carbohydrates? fat;
+    Carbohydrates? saturatedFattyAcids;
+    Carbohydrates? carbohydrates;
+    Carbohydrates? sugar;
+    Carbohydrates? protein;
+    Carbohydrates? salt;
+
+    NutrientData({
+         this.calories,
+         this.kilojules,
+         this.servingSize,
+         this.numberofServings,
+         this.numberofServingIntervals,
+         this.netQuantity,
+         this.caloriesperServing,
+         this.kilojulesperServing,
+         this.fat,
+         this.saturatedFattyAcids,
+         this.carbohydrates,
+         this.sugar,
+         this.protein,
+         this.salt,
+    });
+
+    factory NutrientData.fromJson(Map<String, dynamic> json) => NutrientData(
+        calories: json["Calories"] != null
+            ? Calories.fromJson(json["Calories"])
+            : null,
+        kilojules: json["Kilojules"] != null
+            ? Calories.fromJson(json["Kilojules"])
+            : null,
+        servingSize: json["ServingSize"] != null
+            ? NetQuantity.fromJson(json["ServingSize"])
+            : null,
+        numberofServings: json["NumberofServings"] ?? 0,
+        numberofServingIntervals: json["NumberofServingIntervals"] != null
+            ? NumberofServingIntervals.fromJson(
+                json["NumberofServingIntervals"])
+            : null,
+        netQuantity: json["NetQuantity"] != null
+            ? NetQuantity.fromJson(json["NetQuantity"])
+            : null,
+        caloriesperServing: json["CaloriesperServing"] != null
+            ? Calories.fromJson(json["CaloriesperServing"])
+            : null,
+        kilojulesperServing: json["KilojulesperServing"] != null
+            ? Calories.fromJson(json["KilojulesperServing"])
+            : null,
+        fat: json["Fat"] != null ? Carbohydrates.fromJson(json["Fat"]) : null,
+        saturatedFattyAcids: json["SaturatedFattyAcids"] != null
+            ? Carbohydrates.fromJson(json["SaturatedFattyAcids"])
+            : null,
+        carbohydrates: json["Carbohydrates"] != null
+            ? Carbohydrates.fromJson(json["Carbohydrates"])
+            : null,
+        sugar:
+            json["Sugar"] != null ? Carbohydrates.fromJson(json["Sugar"]) : null,
+        protein: json["Protein"] != null
+            ? Carbohydrates.fromJson(json["Protein"])
+            : null,
+        salt:
+            json["Salt"] != null ? Carbohydrates.fromJson(json["Salt"]) : null,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Calories": calories?.toJson(),
+        "Kilojules": kilojules?.toJson(),
+        "ServingSize": servingSize?.toJson(),
+        "NumberofServings": numberofServings,
+        "NumberofServingIntervals": numberofServingIntervals?.toJson(),
+        "NetQuantity": netQuantity?.toJson(),
+        "CaloriesperServing": caloriesperServing?.toJson(),
+        "KilojulesperServing": kilojulesperServing?.toJson(),
+        "Fat": fat?.toJson(),
+        "SaturatedFattyAcids": saturatedFattyAcids?.toJson(),
+        "Carbohydrates": carbohydrates?.toJson(),
+        "Sugar": sugar?.toJson(),
+        "Protein": protein?.toJson(),
+        "Salt": salt?.toJson(),
+    };
+}
+
+class Calories {
+    NumberofServingIntervals energyInterval;
+    int displayType;
+
+    Calories({
+        required this.energyInterval,
+        required this.displayType,
+    });
+
+    factory Calories.fromJson(Map<String, dynamic> json) => Calories(
+        energyInterval: NumberofServingIntervals.fromJson(json["EnergyInterval"] ?? {}),
+        displayType: json["DisplayType"] ?? 0,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "EnergyInterval": energyInterval.toJson(),
+        "DisplayType": displayType,
+    };
+}
+
+class NumberofServingIntervals {
+    int lower;
+    int upper;
+
+    NumberofServingIntervals({
+        required this.lower,
+        required this.upper,
+    });
+
+    factory NumberofServingIntervals.fromJson(Map<String, dynamic> json) => NumberofServingIntervals(
+        lower: json["Lower"] ?? 0,
+        upper: json["Upper"] ?? 0,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Lower": lower,
+        "Upper": upper,
+    };
+}
+
+class Carbohydrates {
+    Amount amount;
+
+    Carbohydrates({
+        required this.amount,
+    });
+
+    factory Carbohydrates.fromJson(Map<String, dynamic> json) => Carbohydrates(
+        amount: Amount.fromJson(json["Amount"] ?? {}),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Amount": amount.toJson(),
+    };
+}
+
+class Amount {
+    NumberofServingIntervals interval;
+    Weight weight;
+
+    Amount({
+        required this.interval,
+        required this.weight,
+    });
+
+    factory Amount.fromJson(Map<String, dynamic> json) => Amount(
+        interval: NumberofServingIntervals.fromJson(json["Interval"] ?? {}),
+        weight: Weight.fromJson(json["Weight"] ?? {}),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Interval": interval.toJson(),
+        "Weight": weight.toJson(),
+    };
+}
+
+class Weight {
+    String unitType;
+
+    Weight({
+        required this.unitType,
+    });
+
+    factory Weight.fromJson(Map<String, dynamic> json) => Weight(
+        unitType: json["UnitType"] ?? "",
+    );
+
+    Map<String, dynamic> toJson() => {
+        "UnitType": unitType,
+    };
+}
+
+class NetQuantity {
+    String measurementType;
+    Amount weightedInterval;
+    VolumenInterval volumenInterval;
+    CountInterval countInterval;
+
+    NetQuantity({
+        required this.measurementType,
+        required this.weightedInterval,
+        required this.volumenInterval,
+        required this.countInterval,
+    });
+
+    factory NetQuantity.fromJson(Map<String, dynamic> json) => NetQuantity(
+        measurementType: json["MeasurementType"] ?? 0,
+        weightedInterval: Amount.fromJson(json["WeightedInterval"] ?? {}),
+        volumenInterval: VolumenInterval.fromJson(json["VolumenInterval"] ?? {}),
+        countInterval: CountInterval.fromJson(json["CountInterval"] ?? {}),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "MeasurementType": measurementType,
+        "WeightedInterval": weightedInterval.toJson(),
+        "VolumenInterval": volumenInterval.toJson(),
+        "CountInterval": countInterval.toJson(),
+    };
+}
+
+class CountInterval {
+    NumberofServingIntervals interval;
+    Weight count;
+
+    CountInterval({
+        required this.interval,
+        required this.count,
+    });
+
+    factory CountInterval.fromJson(Map<String, dynamic> json) => CountInterval(
+        interval: NumberofServingIntervals.fromJson(json["Interval"] ?? {}),
+        count: Weight.fromJson(json["Count"] ?? {}),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Interval": interval.toJson(),
+        "Count": count.toJson(),
+    };
+}
+
+class VolumenInterval {
+    NumberofServingIntervals interval;
+    Weight volume;
+
+    VolumenInterval({
+        required this.interval,
+        required this.volume,
+    });
+
+    factory VolumenInterval.fromJson(Map<String, dynamic> json) => VolumenInterval(
+        interval: NumberofServingIntervals.fromJson(json["Interval"] ?? {}),
+        volume: Weight.fromJson(json["Volume"] ?? {}),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Interval": interval.toJson(),
+        "Volume": volume.toJson(),
+    };
+}
+
+class PriceInfo {
+    Price price;
+    int corePrice;
+    int containerDeposit;
+    List<dynamic> overrides;
+    String pricebyUnit;
+
+    PriceInfo({
+        required this.price,
+        required this.corePrice,
+        required this.containerDeposit,
+        required this.overrides,
+        required this.pricebyUnit,
+    });
+
+      factory PriceInfo.fromJson(Map<String, dynamic> json) {
+      print("Parsing PriceInfo: $json"); 
+      return PriceInfo(
+        price: Price.fromJson(json["Price"] ?? {}),
+        corePrice: json["CorePrice"] ?? 0,
+        containerDeposit: json["ContainerDeposit"] ?? 0,
+        overrides: json["Overrides"] != null
+            ? List<dynamic>.from(json["Overrides"].map((x) => x))
+            : [], 
+        pricebyUnit: json["PricebyUnit"] ?? "unit", 
+      );
+    }
+
+
+    Map<String, dynamic> toJson() => {
+        "Price": price.toJson(),
+        "CorePrice": corePrice,
+        "ContainerDeposit": containerDeposit,
+        "Overrides": List<dynamic>.from(overrides.map((x) => x)),
+        "PricebyUnit": pricebyUnit,
+    };
+}
+
+class Price {
+    int deliveryPrice;
+    int pickupPrice;
+    int tablePrice;
+
+    Price({
+        required this.deliveryPrice,
+        required this.pickupPrice,
+        required this.tablePrice,
+    });
+
+    factory Price.fromJson(Map<String, dynamic> json) => Price(
+        deliveryPrice: json["DeliveryPrice"] ?? 0,
+        pickupPrice: json["PickupPrice"] ?? 0,
+        tablePrice: json["TablePrice"] ?? 0,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "DeliveryPrice": deliveryPrice,
+        "PickupPrice": pickupPrice,
+        "TablePrice": tablePrice,
+    };
+}
+
+class ProductInfo {
+    int targetMarket;
+    String gtin;
+    String plu;
+    String merchantId;
+    String productType;
+    dynamic productTraits;
+    dynamic countriesofOrigin;
+
+    ProductInfo({
+        required this.targetMarket,
+        required this.gtin,
+        required this.plu,
+        required this.merchantId,
+        required this.productType,
+         this.productTraits,
+         this.countriesofOrigin,
+    });
+
+    factory ProductInfo.fromJson(Map<String, dynamic> json) => ProductInfo(
+        targetMarket: json["TargetMarket"] ?? 0,
+        gtin: json["Gtin"] ?? "",
+        plu: json["Plu"] ?? "",
+        merchantId: json["MerchantID"] ?? "",
+        productType: json["ProductType"] ?? "",
+        productTraits: json["ProductTraits"] ,
+        countriesofOrigin: json["CountriesofOrigin"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "TargetMarket": targetMarket,
+        "Gtin": gtin,
+        "Plu": plu,
+        "MerchantID": merchantId,
+        "ProductType": productType,
+        "ProductTraits": productTraits,
+        "CountriesofOrigin": countriesofOrigin,
+    };
+}
+
+class QuantityInfo {
+    Quantity quantity;
+    List<dynamic>? overrides;
+
+    QuantityInfo({
+        required this.quantity,
+         this.overrides,
+    });
+
+    factory QuantityInfo.fromJson(Map<String, dynamic> json) => QuantityInfo(
+        quantity: Quantity.fromJson(json["Quantity"] ?? {}),
+        overrides: json["Overrides"] != null
+        ? List<dynamic>.from(json["Overrides"])
+        : null,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Quantity": quantity.toJson(),
+        "Overrides": overrides != null
+        ? List<dynamic>.from(overrides!)  
+        : [],
+    };
+}
+
+class Quantity {
+    int minPermitted;
+    int maxPermitted;
+    bool isMinPermittedOptional;
+    int chargeAbove;
+    int refundUnder;
+    int minPermittedUnique;
+    int maxPermittedUnique;
+
+    Quantity({
+        required this.minPermitted,
+        required this.maxPermitted,
+        required this.isMinPermittedOptional,
+        required this.chargeAbove,
+        required this.refundUnder,
+        required this.minPermittedUnique,
+        required this.maxPermittedUnique,
+    });
+
+    factory Quantity.fromJson(Map<String, dynamic> json) => Quantity(
+        minPermitted: json["MinPermitted"] ?? 0,
+        maxPermitted: json["MaxPermitted"] ?? 0,
+        isMinPermittedOptional: json["IsMinPermittedOptional"] ?? false,
+        chargeAbove: json["ChargeAbove"] ?? 0,
+        refundUnder: json["RefundUnder"] ?? 0,
+        minPermittedUnique: json["MinPermittedUnique"] ?? 0,
+        maxPermittedUnique: json["MaxPermittedUnique"] ?? 0,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "MinPermitted": minPermitted,
+        "MaxPermitted": maxPermitted,
+        "IsMinPermittedOptional": isMinPermittedOptional,
+        "ChargeAbove": chargeAbove,
+        "RefundUnder": refundUnder,
+        "MinPermittedUnique": minPermittedUnique,
+        "MaxPermittedUnique": maxPermittedUnique,
+    };
+}
+
+class RewardGroupRules {
+    Reward reward;
+    dynamic overrides;
+
+    RewardGroupRules({
+        required this.reward,
+        required this.overrides,
+    });
+
+    factory RewardGroupRules.fromJson(Map<String, dynamic> json) => RewardGroupRules(
+        reward: Reward.fromJson(json["Reward"] ?? {}),
+        overrides: json["Overrides"] ?? 0,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Reward": reward.toJson(),
+        "Overrides": overrides,
+    };
+}
+
+class Reward {
+    String type;
+    int defaultValue;
+    int multiplierValue;
+    int customValue;
+    bool isMutiplierRequired;
+
+    Reward({
+        required this.type,
+        required this.defaultValue,
+        required this.multiplierValue,
+        required this.customValue,
+        required this.isMutiplierRequired,
+    });
+
+    factory Reward.fromJson(Map<String, dynamic> json) => Reward(
+        type: json["Type"],
+        defaultValue: json["DefaultValue"] ?? 0,
+        multiplierValue: json["MultiplierValue"] ?? 0,
+        customValue: json["CustomValue"] ?? 0,
+        isMutiplierRequired: json["IsMutiplierRequired"] ?? 0,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Type": type,
+        "DefaultValue": defaultValue,
+        "MultiplierValue": multiplierValue,
+        "CustomValue": customValue,
+        "IsMutiplierRequired": isMutiplierRequired,
+    };
+}
+
+class SuspensionRules {
+    Suspension suspension;
+    dynamic suspensionOverride;
+
+    SuspensionRules({
+        required this.suspension,
+        required this.suspensionOverride,
+    });
+
+    factory SuspensionRules.fromJson(Map<String, dynamic> json) => SuspensionRules(
+        suspension: Suspension.fromJson(json["Suspension"] ?? {}),
+        suspensionOverride: json["SuspensionOverride"] ?? 0,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Suspension": suspension.toJson(),
+        "SuspensionOverride": suspensionOverride,
+    };
+}
+
+class Suspension {
+    int suspendedUntil;
+    bool isSuspended;
+    String reason;
+
+    Suspension({
+        required this.suspendedUntil,
+        required this.isSuspended,
+        required this.reason,
+    });
+
+    factory Suspension.fromJson(Map<String, dynamic> json) => Suspension(
+        suspendedUntil: json["SuspendedUntil"] ?? 0,
+        isSuspended: json["IsSuspended"] ?? 0,
+        reason: json["Reason"] ?? 0,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "SuspendedUntil": suspendedUntil,
+        "IsSuspended": isSuspended,
+        "Reason": reason,
+    };
+}
+
+class TaxInfo {
+    int taxrate;
+    int vatRateInPercentage;
+
+    TaxInfo({
+        required this.taxrate,
+        required this.vatRateInPercentage,
+    });
+
+    factory TaxInfo.fromJson(Map<String, dynamic> json) => TaxInfo(
+        taxrate: json["Taxrate"] ?? 0,
+        vatRateInPercentage: json["VATRateInPercentage"] ?? 0,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "Taxrate": taxrate,
+        "VATRateInPercentage": vatRateInPercentage,
+    };
+}
+
+class VisibilityInfo {
+    VisibilityHours visibilityHours;
+
+    VisibilityInfo({
+        required this.visibilityHours,
+    });
+
+    factory VisibilityInfo.fromJson(Map<String, dynamic> json) => VisibilityInfo(
+        visibilityHours: VisibilityHours.fromJson(json["VisibilityHours"] ?? {}),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "VisibilityHours": visibilityHours.toJson(),
+    };
+}
+
+class VisibilityHours {
+    String startDate;
+    String endDate;
+    dynamic? hoursofWeek;
+
+    VisibilityHours({
+        required this.startDate,
+        required this.endDate,
+         this.hoursofWeek,
+    });
+
+    factory VisibilityHours.fromJson(Map<String, dynamic> json) => VisibilityHours(
+        startDate: json["StartDate"] ?? "",
+        endDate: json["EndDate"] ?? "",
+        hoursofWeek: json["HoursofWeek"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "StartDate": startDate,
+        "EndDate": endDate,
+        "HoursofWeek": hoursofWeek,
+    };
+}
