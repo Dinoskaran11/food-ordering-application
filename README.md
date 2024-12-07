@@ -1,8 +1,11 @@
 # food_order_app
 
-A new Flutter project.
+# Screen shots
+![fo1](https://github.com/user-attachments/assets/ae1c0356-d82e-495c-b516-828058c4ebbb)
 
-## Getting Started
+![fo2](https://github.com/user-attachments/assets/b515a147-1399-4079-83b9-538827779047)
+
+![fo3](https://github.com/user-attachments/assets/aab4aa72-470f-4019-8b00-a2cca2d032f4)
 
 This project is a starting point for a Flutter application.
 
